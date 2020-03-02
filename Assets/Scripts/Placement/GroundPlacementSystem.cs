@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class GroundPlacementSystem : MonoBehaviour
 {
+    public GameObject target;
+    public GameObject structure;
+
+    Vector3 truePos;
+    public float gridSize;
 
     private List<GameObject> placeableObjectPrefab;
 
@@ -33,14 +38,17 @@ public class GroundPlacementSystem : MonoBehaviour
                 }
                 
                 if (hit.transform.CompareTag("Terrain"))
-                buildingPos = hit.point;
+                {
+                    buildingPos = hit.point;
+                }
+
 
             }
         }
 
         if(currentBuilding != null)
         {
-            currentBuilding.transform.position = buildingPos;
+            target.transform.position = buildingPos;
         }
     }
 
@@ -48,7 +56,9 @@ public class GroundPlacementSystem : MonoBehaviour
     {
         currentBuilding = Instantiate(buildingPrefab, buildingPos, Quaternion.identity) as GameObject;
         SetColliders(currentBuilding, false);
-        
+        structure = currentBuilding;
+
+
     }
 
     public void SetColliders(GameObject go, bool value)
@@ -57,5 +67,17 @@ public class GroundPlacementSystem : MonoBehaviour
         {
             collider.enabled = value;
         }
+    }
+    void LateUpdate()
+    {
+        if(structure != null)
+        {
+            truePos.x = Mathf.Floor(target.transform.position.x / gridSize) * gridSize;
+            truePos.y = Mathf.Floor(target.transform.position.y / gridSize) * gridSize;
+            truePos.z = Mathf.Floor(target.transform.position.z / gridSize) * gridSize;
+
+            structure.transform.position = truePos;
+        }
+
     }
 }
