@@ -10,17 +10,6 @@ public class buildingmenu : MonoBehaviour
 
     public void openmenu()
     {
-        Open = !Open;
-        if (Open == false)
-        {
-          
-            buildingmenuopen.gameObject.SetActive(false);
-        }
-        if (Open == true)
-        {
-            buildingmenuopen.gameObject.SetActive(true);
-
-        }
-
+        buildingmenuopen.gameObject.SetActive(!buildingmenuopen.activeSelf);
     }
 }
