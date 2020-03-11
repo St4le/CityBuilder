@@ -11,9 +11,9 @@ public class gamecontroller : MonoBehaviour
     public Vector3 spawnvalues;
     private int pop;
     private float happiness;
-    private int iron;
-    private int wood;
-    private int stone;
+    private float iron;
+    private float wood;
+    private float stone;
     public float spawnWait;
     public float spawnMostWait;
     public float spawnLeastWait;
@@ -27,6 +27,9 @@ public class gamecontroller : MonoBehaviour
     public RawImage happy;
     public GameObject buildingmenu;
     private float homeless;
+    private float accumulation;
+    public float tavern;
+    public float fight;
 
 
 
@@ -46,11 +49,7 @@ public class gamecontroller : MonoBehaviour
     void Update()
     {
         spawnWait = Random.Range(spawnLeastWait, spawnMostWait);
-        woodcounter.text = "W= " + wood;
-        stonecounter.text = "S= " + stone;
-        ironcounter.text = "I= " + iron;
-        popcounter.text = "P= " + pop;
-        happycounter.text = "H= " + happiness;
+        
         if (happiness < 0)
         {
             happy.enabled = false;
@@ -61,13 +60,53 @@ public class gamecontroller : MonoBehaviour
             happy.enabled = true;
             sad.enabled = false;
         }
-        pop = GameObject.FindGameObjectsWithTag("people").Length; ;
+        pop = GameObject.FindGameObjectsWithTag("people").Length; 
         houses = GameObject.FindGameObjectsWithTag("home").Length;
+
+        float tempHappiness = 0;
         if (pop > houses * 4)
         {
             homeless = pop % (houses * 4);
-            happiness = homeless * -1;
+            tempHappiness = homeless * -3;
         }
+        if (wood < 15)
+        {
+            tempHappiness = tempHappiness - 15;
+        }
+        if (stone < 10)
+        {
+            tempHappiness = tempHappiness - 15;
+        }
+        if (iron < 5)
+        {
+            tempHappiness = tempHappiness - 15;
+        }
+        tavern = GameObject.FindGameObjectsWithTag("tavern").Length;
+        fight = GameObject.FindGameObjectsWithTag("fight").Length;
+        if (tavern >= 1)
+        {
+            tempHappiness = tempHappiness + (tavern * 3);
+        }
+        else
+        {
+            tempHappiness = tempHappiness - 7;
+        }
+        if (fight >= 1)
+        {
+            tempHappiness = tempHappiness + (fight * 2);
+        }
+        else
+        {
+            tempHappiness = tempHappiness - 7;
+        }
+
+        happiness = tempHappiness;
+
+        woodcounter.text = "W= " + wood;
+        stonecounter.text = "S= " + stone;
+        ironcounter.text = "I= " + iron;
+        popcounter.text = "P= " + pop;
+        happycounter.text = "H= " + happiness;
     }
     IEnumerator peoplespawner()
     {
