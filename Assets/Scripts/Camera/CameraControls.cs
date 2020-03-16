@@ -14,6 +14,11 @@ public class CameraControls : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.Mouse2))
+        {
+            lastMouse = Input.mousePosition;
+        }
         if (Input.GetKey(KeyCode.Mouse2))
         {
             lastMouse = Input.mousePosition - lastMouse;

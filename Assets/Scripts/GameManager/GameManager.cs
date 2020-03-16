@@ -7,7 +7,10 @@ public class GameManager : MonoBehaviour
     public List<GameObject> FarmerHouses = new List<GameObject>();
     public List<GameObject> AI = new List<GameObject>();
 
-    private int HouseNum;
+    private int HouseInt;
+
+    private GameObject CurrentHouse;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,7 +38,10 @@ public class GameManager : MonoBehaviour
             foreach(GameObject item in FarmerHouses)
             {
 
-                HouseNum++;
+                CurrentHouse = FarmerHouses.ElementAt(HouseInt);
+                CurrentHouse.GetComponent<FarmerHouseVariables>().HouseNum = HouseInt;
+
+                HouseInt++;
             }
         }
     }

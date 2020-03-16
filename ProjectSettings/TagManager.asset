@@ -9,6 +9,7 @@ TagManager:
   - home
   - tavern
   - fight
+  - Farmer House
   layers:
   - Default
   - TransparentFX
